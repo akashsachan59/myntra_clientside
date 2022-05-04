@@ -1,11 +1,13 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import Search from './search'
 
 export default function Home({ data }) {
 
   return (
     <div>
+      <Search/>
       {data.map((item) => (
         <ul key={item.id}>
           <li>{item.name}</li>
