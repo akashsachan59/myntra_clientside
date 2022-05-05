@@ -1,10 +1,19 @@
 import Search from './search'
+import { useRouter } from 'next/router'
+import Cookies from 'js-cookie'
 
 export default function Home({ data }) {
-
+  let login = Cookies.get('isloggedin')
+  let router = useRouter()
   return (
     <div>
       <Search/>
+      <button onClick={ () => router.push('/login') } style={{display: login ? 'none' : ''}}>Login</button>
+      <button onClick={ () => {
+                            Cookies.remove('user')
+                            Cookies.remove('isloggedin')
+                            router.push('/')
+                            }} style={{display: login ? '' : 'none'}}>LOGOUT</button>
       {data.map((item) => (
         <ul key={item.id}>
           <li>{item.name}</li>
