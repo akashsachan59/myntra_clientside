@@ -4,7 +4,15 @@ import Cookies from 'js-cookie'
 
 export default function Home({ data }) {
   let login = Cookies.get('isloggedin')
+  let user = Cookies.get('user')
   let router = useRouter()
+  console.log(user)
+
+  const handleCart = () => {
+    router.query.user = user
+    router.push(`/cart?user=${user}`)
+  }
+
   return (
     <div>
       <Search/>
@@ -15,6 +23,7 @@ export default function Home({ data }) {
                             Cookies.remove('isloggedin')
                             router.push('/')
                             }} style={{display: login ? '' : 'none'}}>LOGOUT</button>
+      <button onClick={handleCart}>Cart</button>
       {data.map((item) => (
         <ul key={item.id}>
           <li>{item.name}</li>
