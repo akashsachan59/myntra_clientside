@@ -8,26 +8,21 @@ export default function Login() {
     const router = useRouter();
 
     // States for login
-    const [email, setEmail] = useState('akash.sachan59@gmail.com')
-    const [password, setPassword] = useState('akash123')
-    //const [cookies, setCookie] = useCookies();
-    //const [login, setLogin] = useCookies();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
 
 
     // States for checking the errors
-    //const [submitted, setSubmitted] = useState(false);
     const [error, setError] = useState(false);
 
     // Handling user-name change
     const handleEmail = (e) => {
         setEmail(e.target.value)
-        //setSubmitted(false)
     }
 
     // Handling password change
     const handlePassword = (e) => {
         setPassword(e.target.value)
-        //setSubmitted(false)
     }
 
     // Handling the form submission
@@ -36,7 +31,6 @@ export default function Login() {
         if (email === '' || password === '') {
             setError(true)
         } else {
-            //setSubmitted(true)
             setError(false)
             const data = {
                 email,
@@ -44,14 +38,6 @@ export default function Login() {
             }
             console.log(data)
 
-            // const response = await fetch('http://localhost:3000/login', {
-            //     method: 'POST',
-            //     headers: {
-            //         'Content-Type': 'application/json'
-            //         // 'Content-Type': 'application/x-www-form-urlencoded',
-            //       },
-            //     // data: data,
-            // })
             const response = await fetch('http://localhost:3000/login', {
                 method: 'POST',
                 headers: {

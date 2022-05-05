@@ -9,6 +9,7 @@ export default function Home({ data }) {
     <div>
       <Search/>
       <button onClick={ () => router.push('/login') } style={{display: login ? 'none' : ''}}>Login</button>
+      <button onClick={ () => router.push('/signup') } style={{display: login ? 'none' : ''}}>Signup</button>
       <button onClick={ () => {
                             Cookies.remove('user')
                             Cookies.remove('isloggedin')
