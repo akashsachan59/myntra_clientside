@@ -2,11 +2,11 @@ import { useState } from "react";
 import { useRouter } from "next/router";
 
 export default function Search({ data }) {
-    
+
     const [search, setSearch] = useState('');
-    
-    const router = useRouter();
-    
+
+    //const router = useRouter();
+
     // handle search input
     const handleInput = (e) => {
         setSearch(e.target.value)
@@ -16,47 +16,47 @@ export default function Search({ data }) {
     const handleSubmit = () => {
         router.query.search = search;
         router.push(`/search?search=${search}`);
-        }
-    
-        
-    if(!data){
+    }
+
+
+    if (!data) {
         return (
             <div>
-            <div className="search-container">
-                <div className="search-box">
-                    <input type="text" placeholder="Search for products" onChange={handleInput} />
-                </div>
-                <div className="search-button">
-                    <button onClick={handleSubmit}>Search</button>
+                <div className="search-container">
+                    <div className="search-box">
+                        <input type="text" placeholder="Search for products" onChange={handleInput} />
+                    </div>
+                    <div className="search-button">
+                        <button onClick={handleSubmit}>Search</button>
+                    </div>
                 </div>
             </div>
-            </div>
-            )
-    }else{
+        )
+    } else {
         return (
             <div>
-            <div className="search-container">
-                <div className="search-box">
-                    <input type="text" placeholder="Search for products" onChange={handleInput} />
+                <div className="search-container">
+                    <div className="search-box">
+                        <input type="text" placeholder="Search for products" onChange={handleInput} />
+                    </div>
+                    <div className="search-button">
+                        <button onClick={handleSubmit}>Search</button>
+                    </div>
                 </div>
-                <div className="search-button">
-                    <button onClick={handleSubmit}>Search</button>
+                <div className="search-results">
+                    {data.map((item) => (
+                        <ul key={item.id}>
+                            <li>{item.name}</li>
+                            <li>{item.category}</li>
+                            <li>{item.price}</li>
+                            <li>{item.gender}</li>
+                            <img src={item.image} height="180px" width="135px" />
+                        </ul>
+                    ))}
                 </div>
             </div>
-            <div className="search-results">
-            {data.map((item) => (
-                <ul key={item.id}>
-                    <li>{item.name}</li>
-                    <li>{item.category}</li>
-                    <li>{item.price}</li>
-                    <li>{item.gender}</li>
-                    <img src={item.image} height="180px" width="135px"/>
-                </ul>
-            ))}
-        </div>
-        </div>    
-            )
-    }   
+        )
+    }
 }
 
 export async function getServerSideProps(context) {
