@@ -9,8 +9,54 @@ export default function Home({ data }) {
   console.log(user)
 
   const handleCart = () => {
-    router.query.user = user
+    //router.query.user = user
     router.push(`/cart?user=${user}`)
+  }
+
+  const handleWishlist = () => {
+    //router.query.user = user
+    router.push(`/wishlist?user=${user}`)
+  }
+
+  // Adding product to cart
+  const addToCart = async (e) => {
+    let id = e.target.value
+    let user_id = user
+    e.preventDefault()
+    const data = {
+      id,
+      user_id
+    }
+    const response = await fetch('http://localhost:3000/addToCart', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+            const resJson = await response.json()
+            console.log(resJson)
+  
+  }
+
+  // Adding product to wishlist
+  const addToWishlist = async (e) => {
+    let id = e.target.value
+    let user_id = user
+    e.preventDefault()
+    const data = {
+      id,
+      user_id
+    }
+    const response = await fetch('http://localhost:3000/addToWishlist', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+              });
+            const resJson = await response.json()
+            console.log(resJson)
   }
 
   return (
@@ -24,14 +70,19 @@ export default function Home({ data }) {
                             router.push('/')
                             }} style={{display: login ? '' : 'none'}}>LOGOUT</button>
       <button onClick={handleCart}>Cart</button>
+      <button onClick={handleWishlist}>Wishlist</button>
       {data.map((item) => (
-        <ul key={item.id}>
-          <li>{item.name}</li>
-          <li>{item.category}</li>
-          <li>{item.price}</li>
-          <li>{item.gender}</li>
-          <img src={item.image} height="180px" width="135px"/>
-        </ul>
+        <div key={item.id}>
+          <ul>
+            <li>{item.name}</li>
+            <li>{item.category}</li>
+            <li>{item.price}</li>
+            <li>{item.gender}</li>
+            <img src={item.image} height="180px" width="135px" />
+          </ul>
+          <button onClick={addToWishlist} value={item.id}>Add to Wishlist</button>
+          <button onClick={addToCart} value={item.id}>Add to Cart</button>
+        </div>
       ))}
     </div>
   )
