@@ -27,6 +27,39 @@ export default function Cart(data) {
             router.push(`/cart?user=${user_id}`)
         }
     }
+
+    // handle move to wishlist
+    const moveToWishlist = async (e) => {
+        e.preventDefault()
+        let id = e.target.value
+        let user_id = router.query.user
+        const data = {
+            id,
+            user_id
+        }
+        const responseDel = await fetch('http://localhost:3000/deleteCart', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const resDel = await responseDel.json()
+        console.log(resDel)
+        const responseAdd = await fetch('http://localhost:3000/addToWishlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        });
+        const resAdd = await responseAdd.json()
+        console.log(resAdd)
+        if (resAdd.res) {
+            router.push(`/cart?user=${user_id}`)
+        }
+
+    }
     
     if(data){
         return(
@@ -44,6 +77,7 @@ export default function Cart(data) {
                                 <img src={item.image} height="180px" width="135px" />
                             </ul>
                             <button onClick={remove} value={item.id}>delete from Cart</button>
+                            <button onClick={moveToWishlist} value={item.id}>Move to Wishlist</button>
                         </div>
                     ))}
                 </div>

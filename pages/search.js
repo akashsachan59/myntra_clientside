@@ -5,7 +5,7 @@ export default function Search({ data }) {
 
     const [search, setSearch] = useState('');
 
-    //const router = useRouter();
+    const router = useRouter();
 
     // handle search input
     const handleInput = (e) => {
